@@ -201,6 +201,30 @@ const products = [
     }
 ];
 
+const categories = [
+    {
+        "id": "4f7f61e5-96c2-445d-80fb-79f58e3d061b",
+        "name": "Sports"
+    },
+    {
+        "id": "1b6c2e31-2e03-4487-bedd-d1139c7e5571",
+        "name": "Mobile phones"
+    },
+    {
+        "id": "8a2f9b1c-3d4e-4f5a-9b6c-7d8e9f0a1b2c",
+        "name": "Laptops"
+    },
+    {
+        "id": "2c4e6g8i-0k2m-4o6q-8s0u-2w4y6a8c0e2g",
+        "name": "Headphones"
+    },
+    {
+        "id": "9d1f3h5j-7l9n-1p3r-5t7v-9x1z3b5d7f9h",
+        "name": "Cameras"
+    }
+];
+
 export const db = {
-    products
+    products,
+    categories
 }
