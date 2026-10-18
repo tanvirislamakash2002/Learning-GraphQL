@@ -16,6 +16,12 @@ const resolvers = {
     category: (parent: any, args: { categoryId: string }, context: any) => {
       return db.categories.find(category => category.id === args.categoryId)
     }
+  },
+  Product: {
+    category: (parent: any, args: any, context: any) => {
+      const result = db.categories.find(category => category.id === parent.categoryId)
+      return result
+    }
   }
 };
 

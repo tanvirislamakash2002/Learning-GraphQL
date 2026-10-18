@@ -9,7 +9,7 @@ export const typeDefs = gql`
     price: Float
     quantity: Int
     onStock: Boolean
-    category: String
+    category:Category
   }
 
   type Category{
