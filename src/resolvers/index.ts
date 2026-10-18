@@ -19,8 +19,12 @@ const resolvers = {
   },
   Product: {
     category: (parent: any, args: any, context: any) => {
-      const result = db.categories.find(category => category.id === parent.categoryId)
-      return result
+      return db.categories.find(category => category.id === parent.categoryId)
+    }
+  },
+  Category: {
+    products: (parent: any, args: any, context: any) => {
+      return db.products.filter(product => product.categoryId === parent.id)
     }
   }
 };

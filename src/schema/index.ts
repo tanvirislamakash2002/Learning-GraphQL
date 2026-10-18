@@ -15,6 +15,7 @@ export const typeDefs = gql`
   type Category{
     id:ID!
     name:String
+    products:[Product]
   }
   type Query {
     products: [Product]
