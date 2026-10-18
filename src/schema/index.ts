@@ -9,7 +9,8 @@ export const typeDefs = gql`
     price: Float
     quantity: Int
     onStock: Boolean
-    category:Category
+    category: Category
+    reviews: [Review]
   }
 
   type Category{
@@ -17,6 +18,15 @@ export const typeDefs = gql`
     name:String
     products:[Product]
   }
+
+  type Review{
+    id: ID!
+    review: String
+    rating: Float
+    date: String
+    productId: String
+  }
+
   type Query {
     products: [Product]
     product(productId:ID!):Product

@@ -18,13 +18,16 @@ const resolvers = {
     }
   },
   Product: {
-    category: (parent: any, args: any, context: any) => {
-      return db.categories.find(category => category.id === parent.categoryId)
+    category: ({ categoryId }: any, args: any, context: any) => {
+      return db.categories.find(category => category.id === categoryId)
+    },
+    reviews: ({ id }: any, args: any, context: any) => {
+      return db.reviews.filter(review => review.productId === id)
     }
   },
   Category: {
-    products: (parent: any, args: any, context: any) => {
-      return db.products.filter(product => product.categoryId === parent.id)
+    products: ({ id }: any, args: any, context: any) => {
+      return db.products.filter(product => product.categoryId === id)
     }
   }
 };

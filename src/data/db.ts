@@ -224,7 +224,81 @@ const categories = [
     }
 ];
 
+const reviews = [
+    {
+        "id": "bd23fdc4-0636-4199-ad18-7ca9870e855f",
+        "review": "Great basketball for playing with friends!",
+        "rating": 4.5,
+        "date": "2023-10-20T23:44:24.245+06:00",
+        "productId": "2a089dca-d882-4305-9e25-d1dfeb93fd12"
+    },
+    {
+        "id": "c1a2b3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+        "review": "Perfect for beach trips. The soft touch is exactly what I needed.",
+        "rating": 5.0,
+        "date": "2023-10-22T14:30:00.000+06:00",
+        "productId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+    },
+    {
+        "id": "f9e8d7c6-b5a4-4321-9876-543210fedcba",
+        "review": "Good visibility on the field, but the surface scuffed a bit after one game.",
+        "rating": 3.8,
+        "date": "2023-10-25T09:15:30.000+06:00",
+        "productId": "f9e8d7c6-b5a4-3210-9876-543210fedcba"
+    },
+    {
+        "id": "11223344-5566-7788-99aa-bbccddeeff11",
+        "review": "Lightweight and great control. Highly recommend for intermediate players.",
+        "rating": 4.7,
+        "date": "2023-10-26T18:20:00.000+06:00",
+        "productId": "11223344-5566-7788-99aa-bbccddeeff00"
+    },
+    {
+        "id": "99887766-5544-3322-1100-aabbccddeeff22",
+        "review": "Very thick and comfortable. The carrying strap is a nice bonus.",
+        "rating": 4.9,
+        "date": "2023-10-28T07:45:12.000+06:00",
+        "productId": "99887766-5544-3322-1100-aabbccddeeff"
+    },
+    {
+        "id": "deadbeef-cafe-babe-1234-567890abcdea",
+        "review": "Adjustable weights are very convenient, though the locking mechanism feels slightly loose.",
+        "rating": 4.0,
+        "date": "2023-10-29T12:10:05.000+06:00",
+        "productId": "deadbeef-cafe-babe-1234-567890abcdef"
+    },
+    {
+        "id": "00112233-4455-6677-8899-aabbccddeeff33",
+        "review": "Fast spin, tangle-free cable. Great for HIIT workouts.",
+        "rating": 4.6,
+        "date": "2023-10-30T16:55:00.000+06:00",
+        "productId": "2a089dca-d882-4305-9e25-d1dfeb93fd12"
+    },
+    {
+        "id": "ffeeddcc-bbaa-9988-7766-554433221100",
+        "review": "Leather feels premium and it was ready to use right out of the box.",
+        "rating": 4.8,
+        "date": "2023-11-01T10:30:45.000+06:00",
+        "productId": "ffeeddcc-bbaa-9988-7766-554433221100"
+    },
+    {
+        "id": "aabbccdd-eeff-0011-2233-445566778899",
+        "review": "High quality clubs, but they arrived a day later than expected.",
+        "rating": 3.5,
+        "date": "2023-11-02T14:22:10.000+06:00",
+        "productId": "aabbccdd-eeff-0011-2233-445566778899"
+    },
+    {
+        "id": "12345678-90ab-cdef-1234-567890abcdef",
+        "review": "No fogging issues at all. Very clear vision underwater.",
+        "rating": 4.4,
+        "date": "2023-11-03T08:12:00.000+06:00",
+        "productId": "12345678-90ab-cdef-1234-567890abcdef"
+    }
+];
+
 export const db = {
     products,
-    categories
+    categories,
+    reviews
 }
