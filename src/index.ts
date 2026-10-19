@@ -1,14 +1,20 @@
+import { readFileSync } from "fs";
+import gql from "graphql-tag";
 import { buildSubgraphSchema } from "@apollo/subgraph";
 import { ApolloServer } from "@apollo/server";
 import {
   startStandaloneServer,
 } from "@apollo/server/standalone";
-import resolvers from "./resolvers";
-import { typeDefs } from "./schema/index"
+import resolvers from "./resolvers/index.js";
+
 const port = "4001";
 
 async function main() {
-
+  let typeDefs = gql(
+    readFileSync("schema.graphql", {
+      encoding: "utf-8",
+    })
+  );
   const server = new ApolloServer({
     schema: buildSubgraphSchema({ typeDefs, resolvers }),
   });

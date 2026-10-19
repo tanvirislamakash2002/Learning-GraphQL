@@ -3,7 +3,7 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "target": "esnext",
-    "module": "commonjs",
+    "module": "preserve",
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": true,
@@ -15,12 +15,24 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "lib": ["esnext", "esnext.asynciterable", "DOM"],
-    "types": ["node", "jest"],
+    "types": [
+      "node",
+      "jest"
+    ],
     "baseUrl": "../subgraph-template-typescript-apollo-server-boilerplate",
     "paths": {
       "*": ["types/*"]
-    }
+    },
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true
   },
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
-    "codegen.ts", "dist"]
+    "codegen.ts",
+    "prisma.config.ts",
+    "dist",
+    "node_modules"
+  ]
 }

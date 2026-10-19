@@ -32,4 +32,9 @@ node_modules/
 .idea/
 
 generated-schema.graphql
+
+.agents
+.cloude
+.cursor
+.devin
 .vscode

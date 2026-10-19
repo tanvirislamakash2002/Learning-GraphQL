@@ -1,0 +1,13 @@
+{
+    "terminal.integrated.profiles.osx": {
+      "graphos": {
+        "path": "zsh",
+        "args": ["-l"],
+        "env": {
+          "APOLLO_KEY": "service:my-api-noaudsr:lKsDnga1ZGaOUn1d0CygKQ",
+          "APOLLO_GRAPH_REF": "my-api-noaudsr@current",
+        }
+      }
+    },
+    "terminal.integrated.defaultProfile.osx": "graphos"
+  }

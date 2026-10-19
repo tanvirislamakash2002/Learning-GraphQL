@@ -1,5 +1,5 @@
-import { Resolvers } from "../__generated__/resolvers-types";
-import { productsSource } from "./productsSource";
+import { Resolvers } from "../__generated__/resolvers-types.js";
+import { productsSource } from "./productsSource.js";
 
 // Resolver functions must be in a map that follows the same hierarchy and naming structure as the schema
 // Learn more about writing resolver functions:  🔗 https://www.apollographql.com/docs/apollo-server/data/resolvers

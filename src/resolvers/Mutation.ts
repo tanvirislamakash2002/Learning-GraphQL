@@ -1,5 +1,5 @@
-import { Resolvers, MutationCreateProductArgs } from "../__generated__/resolvers-types";
-import { productsSource } from "./productsSource";
+import { Resolvers, MutationCreateProductArgs } from "../__generated__/resolvers-types.js";
+import { productsSource } from "./productsSource.js";
 import { ApolloError } from "apollo-server-errors";
 
 export const Mutation: Resolvers = {
