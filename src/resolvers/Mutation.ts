@@ -1,18 +1,11 @@
 import { Resolvers, MutationCreateProductArgs, MutationSignupArgs, MutationSigninArgs } from "../__generated__/resolvers-types.js";
 import { productsSource } from "./productsSource.js";
 import { ApolloError } from "apollo-server-errors";
-import { prisma } from "../prisma/db.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { jwtHelper } from "../utils/jwtHelper.js";
 import config from "../config/index.js";
 
-interface userInfo {
-  name: string,
-  email: string,
-  password: string
-  bio?: string
-}
 export const Mutation: Resolvers = {
   Mutation: {
     createProduct(
@@ -46,7 +39,7 @@ export const Mutation: Resolvers = {
     signup: async (
       _parent: any,
       args: MutationSignupArgs,
-      _context: any
+      { prisma }: any
     ) => {
       const isExist = await prisma.User.first({
         email: args.email
@@ -73,7 +66,7 @@ export const Mutation: Resolvers = {
         )
       }
 
-      const token = await jwtHelper({ userId: newUser.id }, config.jwt.secret as string)
+      const token = await jwtHelper.generateToken({ userId: newUser.id }, config.jwt.secret as string)
       return {
         userError: null,
         token
@@ -82,7 +75,7 @@ export const Mutation: Resolvers = {
     signin: async (
       parent: any,
       args: MutationSigninArgs,
-      context: any
+      { prisma }: any
     ) => {
       const user = await prisma.User.first({
         email: args.email
@@ -104,12 +97,15 @@ export const Mutation: Resolvers = {
         }
       }
 
-      const token = await jwtHelper({ userId: user.id }, config.jwt.secret as string)
+      const token = await jwtHelper.generateToken({ userId: user.id }, config.jwt.secret as string)
 
       return {
         userError: null,
         token
       }
+    },
+    addPost: async (parent: any, args: any, { prisma }: any) => {
+
     }
   },
 };

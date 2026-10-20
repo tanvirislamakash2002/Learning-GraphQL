@@ -8,7 +8,11 @@ import {
 } from "@apollo/server/standalone";
 import resolvers from "./resolvers/index.js";
 import { typeDefs } from "./schema.js";
-
+import { prisma } from './prisma/db.js';
+import { jwtHelper } from './utils/jwtHelper.js';
+interface Context {
+  prisma: typeof prisma;
+}
 const port = "4001";
 
 async function main() {
@@ -18,6 +22,12 @@ async function main() {
   });
   const { url } = await startStandaloneServer(server, {
     listen: { port: Number.parseInt(port) },
+    context: async ({ req }): Promise<Context> => {
+      const userInfo = await jwtHelper.getUserInfoFromToken(req.headers.authorization as string)
+      return {
+        prisma
+      }
+    }
   });
 
   console.log(`🚀  Subgraph ready at ${url}`);

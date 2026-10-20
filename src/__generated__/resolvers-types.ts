@@ -31,9 +31,16 @@ export type CreateProductInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addPost?: Maybe<PostPayload>;
   createProduct?: Maybe<Product>;
   signin?: Maybe<AuthPayload>;
   signup?: Maybe<AuthPayload>;
+};
+
+
+export type MutationAddPostArgs = {
+  content: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 
@@ -63,6 +70,12 @@ export type Post = {
   id: Scalars['ID']['output'];
   published: Scalars['Boolean']['output'];
   title: Scalars['String']['output'];
+};
+
+export type PostPayload = {
+  __typename?: 'PostPayload';
+  post?: Maybe<Post>;
+  userError?: Maybe<Scalars['String']['output']>;
 };
 
 export type Product = {
@@ -182,6 +195,7 @@ export type ResolversTypes = ResolversObject<{
   Post: ResolverTypeWrapper<Post>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  PostPayload: ResolverTypeWrapper<PostPayload>;
   Product: ResolverTypeWrapper<Product>;
   Profile: ResolverTypeWrapper<Profile>;
   Query: ResolverTypeWrapper<{}>;
@@ -197,6 +211,7 @@ export type ResolversParentTypes = ResolversObject<{
   Post: Post;
   ID: Scalars['ID']['output'];
   Boolean: Scalars['Boolean']['output'];
+  PostPayload: PostPayload;
   Product: Product;
   Profile: Profile;
   Query: {};
@@ -210,6 +225,7 @@ export type AuthPayloadResolvers<ContextType = DataSourceContext, ParentType ext
 }>;
 
 export type MutationResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  addPost?: Resolver<Maybe<ResolversTypes['PostPayload']>, ParentType, ContextType, RequireFields<MutationAddPostArgs, 'content' | 'title'>>;
   createProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<MutationCreateProductArgs, 'input'>>;
   signin?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<MutationSigninArgs, 'email' | 'password'>>;
   signup?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<MutationSignupArgs, 'email' | 'name' | 'password'>>;
@@ -222,6 +238,12 @@ export type PostResolvers<ContextType = DataSourceContext, ParentType extends Re
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   published?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type PostPayloadResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['PostPayload'] = ResolversParentTypes['PostPayload']> = ResolversObject<{
+  post?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType>;
+  userError?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -261,6 +283,7 @@ export type Resolvers<ContextType = DataSourceContext> = ResolversObject<{
   AuthPayload?: AuthPayloadResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
+  PostPayload?: PostPayloadResolvers<ContextType>;
   Product?: ProductResolvers<ContextType>;
   Profile?: ProfileResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
