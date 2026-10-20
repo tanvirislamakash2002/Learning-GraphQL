@@ -49,6 +49,7 @@ export type MutationSigninArgs = {
 
 
 export type MutationSignupArgs = {
+  bio?: InputMaybe<Scalars['String']['input']>;
   email: Scalars['String']['input'];
   name: Scalars['String']['input'];
   password: Scalars['String']['input'];

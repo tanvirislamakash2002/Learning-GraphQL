@@ -4,11 +4,14 @@ import { ApolloError } from "apollo-server-errors";
 import { prisma } from "../prisma/db.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import { jwtHelper } from "../utils/jwtHelper.js";
+import config from "../config/index.js";
 
 interface userInfo {
   name: string,
   email: string,
   password: string
+  bio?: string
 }
 export const Mutation: Resolvers = {
   Mutation: {
@@ -59,10 +62,18 @@ export const Mutation: Resolvers = {
       const newUser = await prisma.User.create({
         name: args.name,
         email: args.email,
-        password: hashedPassword,
+        password: hashedPassword
       });
 
-      const token = jwt.sign({ userId: newUser.id }, "signature", { expiresIn: "1d" })
+      if (args.bio) {
+        await prisma.Profile.create({
+          bio: args.bio,
+          userId: newUser.id
+        }
+        )
+      }
+
+      const token = await jwtHelper({ userId: newUser.id }, config.jwt.secret as string)
       return {
         userError: null,
         token
@@ -93,7 +104,8 @@ export const Mutation: Resolvers = {
         }
       }
 
-      const token = jwt.sign({ userId: user.id }, "signature", { expiresIn: "1d" })
+      const token = await jwtHelper({ userId: user.id }, config.jwt.secret as string)
+
       return {
         userError: null,
         token
