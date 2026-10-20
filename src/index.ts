@@ -1,3 +1,4 @@
+import 'temporal-polyfill/full/global';
 import { readFileSync } from "fs";
 import gql from "graphql-tag";
 import { buildSubgraphSchema } from "@apollo/subgraph";
@@ -6,15 +7,12 @@ import {
   startStandaloneServer,
 } from "@apollo/server/standalone";
 import resolvers from "./resolvers/index.js";
+import { typeDefs } from "./schema.js";
 
 const port = "4001";
 
 async function main() {
-  let typeDefs = gql(
-    readFileSync("schema.graphql", {
-      encoding: "utf-8",
-    })
-  );
+
   const server = new ApolloServer({
     schema: buildSubgraphSchema({ typeDefs, resolvers }),
   });

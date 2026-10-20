@@ -1,7 +1,13 @@
 import { Resolvers, MutationCreateProductArgs } from "../__generated__/resolvers-types.js";
 import { productsSource } from "./productsSource.js";
 import { ApolloError } from "apollo-server-errors";
+import { prisma } from "../prisma/db.js";
 
+interface userInfo {
+  name: string,
+  email: string,
+  password: string
+}
 export const Mutation: Resolvers = {
   Mutation: {
     createProduct(
@@ -30,5 +36,19 @@ export const Mutation: Resolvers = {
       productsSource.push({ ...newProduct });
       return { ...newProduct };
     },
+
+    // new 
+    signup: async (
+      _parent: any,
+      args: userInfo,
+      _context: any
+    ) => {
+      const user = await prisma.User.create({
+        name: args.name,
+        email: args.email,
+        password: args.password,
+      });
+      return user;
+    }
   },
 };

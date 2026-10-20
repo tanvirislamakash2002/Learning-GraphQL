@@ -199,24 +199,17 @@
           },
           "User": {
             "fields": {
-              "authorId": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/text@1",
-                  "kind": "scalar"
-                }
-              },
-              "content": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/text@1",
-                  "kind": "scalar"
-                }
-              },
               "createdAt": {
                 "nullable": false,
                 "type": {
                   "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "email": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
                   "kind": "scalar"
                 }
               },
@@ -227,14 +220,14 @@
                   "kind": "scalar"
                 }
               },
-              "published": {
+              "name": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/bool@1",
+                  "codecId": "pg/text@1",
                   "kind": "scalar"
                 }
               },
-              "title": {
+              "password": {
                 "nullable": false,
                 "type": {
                   "codecId": "pg/text@1",
@@ -284,23 +277,20 @@
             },
             "storage": {
               "fields": {
-                "authorId": {
-                  "column": "authorId"
-                },
-                "content": {
-                  "column": "content"
-                },
                 "createdAt": {
                   "column": "createdAt"
+                },
+                "email": {
+                  "column": "email"
                 },
                 "id": {
                   "column": "id"
                 },
-                "published": {
-                  "column": "published"
+                "name": {
+                  "column": "name"
                 },
-                "title": {
-                  "column": "title"
+                "password": {
+                  "column": "password"
                 },
                 "updatedAt": {
                   "column": "updatedAt"
@@ -482,16 +472,6 @@
             },
             "users": {
               "columns": {
-                "authorId": {
-                  "codecId": "pg/text@1",
-                  "dataType": "pg/text",
-                  "nullable": false
-                },
-                "content": {
-                  "codecId": "pg/text@1",
-                  "dataType": "pg/text",
-                  "nullable": false
-                },
                 "createdAt": {
                   "codecId": "pg/timestamptz-temporal@1",
                   "dataType": "pg/timestamptz",
@@ -499,6 +479,11 @@
                     "expression": "now()",
                     "kind": "function"
                   },
+                  "nullable": false
+                },
+                "email": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
                   "nullable": false
                 },
                 "id": {
@@ -510,16 +495,12 @@
                   },
                   "nullable": false
                 },
-                "published": {
-                  "codecId": "pg/bool@1",
-                  "dataType": "pg/bool",
-                  "default": {
-                    "kind": "literal",
-                    "value": false
-                  },
+                "name": {
+                  "codecId": "pg/text@1",
+                  "dataType": "pg/text",
                   "nullable": false
                 },
-                "title": {
+                "password": {
                   "codecId": "pg/text@1",
                   "dataType": "pg/text",
                   "nullable": false
@@ -537,7 +518,13 @@
                   "id"
                 ]
               },
-              "uniques": []
+              "uniques": [
+                {
+                  "columns": [
+                    "email"
+                  ]
+                }
+              ]
             }
           }
         },
@@ -545,7 +532,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "40fde63b9e9516bec40aabfd034c4bf05cee58521d0c383fd1f385f0d43258eb"
+    "storageHash": "f2fb0ea836134522e1016ea3bbb975e6c65f4e2d2c22fdc5385c27311b84a23a"
   },
   "execution": {
     "executionHash": "153eb1b184e44178d105cd3e4ffa587ae2dc036fad4cfe37cf5bd5149dab565b",

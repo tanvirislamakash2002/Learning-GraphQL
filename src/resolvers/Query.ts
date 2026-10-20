@@ -1,5 +1,6 @@
 import { Resolvers } from "../__generated__/resolvers-types.js";
 import { productsSource } from "./productsSource.js";
+import { prisma } from "../prisma/db.js";
 
 // Resolver functions must be in a map that follows the same hierarchy and naming structure as the schema
 // Learn more about writing resolver functions:  🔗 https://www.apollographql.com/docs/apollo-server/data/resolvers
@@ -15,5 +16,10 @@ export const Query: Resolvers = {
     products() {
       return productsSource.map((p) => ({ ...p }));
     },
+
+    // Returns the currently authenticated user (or user by id for testing)
+    me: async (_parent: any, args: { id?: number }, _context: any) => {
+      return await prisma.User.first({ id: args.id ?? 1 });
+    }
   },
 };
