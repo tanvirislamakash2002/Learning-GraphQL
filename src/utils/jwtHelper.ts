@@ -1,12 +1,12 @@
 import jwt, { Secret } from "jsonwebtoken"
-import config from "../config"
+import config from "../config/index.js"
 
 const generateToken = async (payload: { userId: number }, secret: Secret) => {
     const token = jwt.sign(payload, secret, { expiresIn: "1d" })
     return token
 }
 
-const getUserInfoFromToken = async (token: string): any => {
+const getUserInfoFromToken = async (token: string): Promise<any> => {
     try {
         const userData = jwt.verify(token, config.jwt.secret as string) as {
             userId: number

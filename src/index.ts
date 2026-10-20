@@ -12,6 +12,9 @@ import { prisma } from './prisma/db.js';
 import { jwtHelper } from './utils/jwtHelper.js';
 interface Context {
   prisma: typeof prisma;
+  userInfo: {
+    userId: number | null
+  } | null
 }
 const port = "4001";
 
@@ -25,7 +28,8 @@ async function main() {
     context: async ({ req }): Promise<Context> => {
       const userInfo = await jwtHelper.getUserInfoFromToken(req.headers.authorization as string)
       return {
-        prisma
+        prisma,
+        userInfo
       }
     }
   });

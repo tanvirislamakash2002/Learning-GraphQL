@@ -104,8 +104,34 @@ export const Mutation: Resolvers = {
         token
       }
     },
-    addPost: async (parent: any, args: any, { prisma }: any) => {
+    addPost: async (parent: any, args: any, { prisma, userInfo }: any) => {
+      if (!userInfo) {
+        return {
+          userError: "Unauthorized",
+          post: null
+        }
+      }
 
+      if (!args.title || !args.content) {
+        return {
+          userError: "Title and Content is required",
+          post: null
+        }
+      }
+
+      const newPost = await prisma.Post.create({
+        title: args.title,
+        content: args.content,
+        authorId: userInfo.userId
+      })
+
+      return {
+        userError: null,
+        post: {
+          ...newPost,
+          createdAt: newPost.createdAt.toString()
+        }
+      }
     }
   },
 };
