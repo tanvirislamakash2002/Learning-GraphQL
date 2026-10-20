@@ -18,8 +18,12 @@ export const Query: Resolvers = {
     },
 
     // Returns the currently authenticated user (or user by id for testing)
-    me: async (_parent: any, args: { id?: number }, _context: any) => {
-      return await prisma.User.first({ id: args.id ?? 1 });
-    }
+    users: async () => {
+      const users = await prisma.User.all();
+      return users.map((user) => ({
+        ...user,
+        id: String(user.id),
+      }));
+    },
   },
 };

@@ -4,6 +4,7 @@ export const typeDefs = gql(`
 
     type Query {
         me: User
+        users:[User]
         posts: [Post]
     }
 
@@ -12,7 +13,18 @@ export const typeDefs = gql(`
             name: String!,
             email: String!,
             password: String!
-        ):User
+        ): AuthPayload,
+
+        signin(
+        email: String!
+        password: String!
+        ): AuthPayload
+    }
+
+
+    type AuthPayload {
+    userError: String
+    token:String
     }
         
     type Post {

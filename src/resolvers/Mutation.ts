@@ -1,7 +1,9 @@
-import { Resolvers, MutationCreateProductArgs } from "../__generated__/resolvers-types.js";
+import { Resolvers, MutationCreateProductArgs, MutationSignupArgs, MutationSigninArgs } from "../__generated__/resolvers-types.js";
 import { productsSource } from "./productsSource.js";
 import { ApolloError } from "apollo-server-errors";
 import { prisma } from "../prisma/db.js";
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 interface userInfo {
   name: string,
@@ -40,15 +42,62 @@ export const Mutation: Resolvers = {
     // new 
     signup: async (
       _parent: any,
-      args: userInfo,
+      args: MutationSignupArgs,
       _context: any
     ) => {
-      const user = await prisma.User.create({
+      const isExist = await prisma.User.first({
+        email: args.email
+      })
+
+      if (isExist) {
+        return {
+          userError: "Already this email is registered!",
+          token: null
+        }
+      }
+      const hashedPassword = await bcrypt.hash(args.password, 12)
+      const newUser = await prisma.User.create({
         name: args.name,
         email: args.email,
-        password: args.password,
+        password: hashedPassword,
       });
-      return user;
+
+      const token = jwt.sign({ userId: newUser.id }, "signature", { expiresIn: "1d" })
+      return {
+        userError: null,
+        token
+      };
+    },
+    signin: async (
+      parent: any,
+      args: MutationSigninArgs,
+      context: any
+    ) => {
+      const user = await prisma.User.first({
+        email: args.email
+      })
+
+      if (!user) {
+        return {
+          userError: "User not found!",
+          token: null
+        }
+      }
+
+      const correctPass = await bcrypt.compare(args.password, user.password)
+
+      if (!correctPass) {
+        return {
+          userError: "Incorrect Password!",
+          token: null
+        }
+      }
+
+      const token = jwt.sign({ userId: user.id }, "signature", { expiresIn: "1d" })
+      return {
+        userError: null,
+        token
+      }
     }
   },
 };
