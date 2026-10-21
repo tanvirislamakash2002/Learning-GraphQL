@@ -35,12 +35,12 @@ export type Mutation = {
   createProduct?: Maybe<Product>;
   signin?: Maybe<AuthPayload>;
   signup?: Maybe<AuthPayload>;
+  updatePost?: Maybe<PostPayload>;
 };
 
 
 export type MutationAddPostArgs = {
-  content: Scalars['String']['input'];
-  title: Scalars['String']['input'];
+  post: PostInput;
 };
 
 
@@ -62,6 +62,12 @@ export type MutationSignupArgs = {
   password: Scalars['String']['input'];
 };
 
+
+export type MutationUpdatePostArgs = {
+  post: PostInput;
+  postId: Scalars['ID']['input'];
+};
+
 export type Post = {
   __typename?: 'Post';
   author?: Maybe<User>;
@@ -70,6 +76,11 @@ export type Post = {
   id: Scalars['ID']['output'];
   published: Scalars['Boolean']['output'];
   title: Scalars['String']['output'];
+};
+
+export type PostInput = {
+  content?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PostPayload = {
@@ -192,9 +203,10 @@ export type ResolversTypes = ResolversObject<{
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   CreateProductInput: CreateProductInput;
   Mutation: ResolverTypeWrapper<{}>;
-  Post: ResolverTypeWrapper<Post>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  Post: ResolverTypeWrapper<Post>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
+  PostInput: PostInput;
   PostPayload: ResolverTypeWrapper<PostPayload>;
   Product: ResolverTypeWrapper<Product>;
   Profile: ResolverTypeWrapper<Profile>;
@@ -208,9 +220,10 @@ export type ResolversParentTypes = ResolversObject<{
   String: Scalars['String']['output'];
   CreateProductInput: CreateProductInput;
   Mutation: {};
-  Post: Post;
   ID: Scalars['ID']['output'];
+  Post: Post;
   Boolean: Scalars['Boolean']['output'];
+  PostInput: PostInput;
   PostPayload: PostPayload;
   Product: Product;
   Profile: Profile;
@@ -225,10 +238,11 @@ export type AuthPayloadResolvers<ContextType = DataSourceContext, ParentType ext
 }>;
 
 export type MutationResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  addPost?: Resolver<Maybe<ResolversTypes['PostPayload']>, ParentType, ContextType, RequireFields<MutationAddPostArgs, 'content' | 'title'>>;
+  addPost?: Resolver<Maybe<ResolversTypes['PostPayload']>, ParentType, ContextType, RequireFields<MutationAddPostArgs, 'post'>>;
   createProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<MutationCreateProductArgs, 'input'>>;
   signin?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<MutationSigninArgs, 'email' | 'password'>>;
   signup?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<MutationSignupArgs, 'email' | 'name' | 'password'>>;
+  updatePost?: Resolver<Maybe<ResolversTypes['PostPayload']>, ParentType, ContextType, RequireFields<MutationUpdatePostArgs, 'post' | 'postId'>>;
 }>;
 
 export type PostResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = ResolversObject<{
