@@ -1,4 +1,5 @@
 import { PostPayload } from "../../__generated__/resolvers-types"
+import { checkUserAccess } from "../../utils/checkUserAccess.js"
 
 export const postResolvers = {
     addPost: async (parent: any, { post }: any, { prisma, userInfo }: any): Promise<PostPayload> => {
@@ -39,33 +40,9 @@ export const postResolvers = {
             }
         }
 
-        const user = await prisma.User.first({
-            id: Number(userInfo.userId)
-        })
-
-        if (!user) {
-            return {
-                userError: "User not found!",
-                post: null
-            }
-        }
-
-        const post = await prisma.Post.first({
-            id: Number(args.postId)
-        })
-
-        if (!post) {
-            return {
-                userError: "Post not found!",
-                post: null
-            }
-        }
-
-        if (post.authorId !== user.id) {
-            return {
-                userError: "Post not owned by User!",
-                post: null
-            }
+        const error = await checkUserAccess(prisma, userInfo.userId, args.postId)
+        if (error) {
+            return error
         }
 
         const updatePost = await prisma.Post.where({
@@ -75,6 +52,28 @@ export const postResolvers = {
         return {
             userError: null,
             post: updatePost
+        }
+    },
+    deletePost: async (parent: any, args: any, { prisma, userInfo }: any): Promise<PostPayload> => {
+        if (!userInfo) {
+            return {
+                userError: "Unauthorized",
+                post: null
+            }
+        }
+
+        const error = await checkUserAccess(prisma, userInfo.userId, args.postId)
+        if (error) {
+            return error
+        }
+
+        const deletedPost = await prisma.Post.where({
+            id: Number(args.postId)
+        }).delete(args.post)
+
+        return {
+            userError: null,
+            post: deletedPost
         }
     }
 }
