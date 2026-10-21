@@ -1,10 +1,6 @@
 import { Resolvers, MutationCreateProductArgs, MutationSignupArgs, MutationSigninArgs } from "../../__generated__/resolvers-types.js";
 import { productsSource } from "../productsSource.js";
 import { ApolloError } from "apollo-server-errors";
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
-import { jwtHelper } from "../../utils/jwtHelper.js";
-import config from "../../config/index.js";
 import { authResolvers } from "./auth.js";
 import { postResolvers } from "./post.js";
 

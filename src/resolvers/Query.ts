@@ -24,5 +24,22 @@ export const Query: Resolvers = {
         id: String(user.id),
       }));
     },
+
+    posts: async (parent: any, args: any, { prisma }: any) => {
+      return await prisma.Post.where({
+        published: false
+      }).orderBy((p: any) => p.createdAt.asc()).all()
+    },
+
+    me: async (parent: any, args: any, { prisma, userInfo }: any) => {
+      return await prisma.User.first({
+        id: userInfo.userId
+      })
+    },
+    profile: async (parent: any, args: any, { prisma, userInfo }: any) => {
+      return await prisma.Profile.first({
+        userId: Number(args.userId)
+      })
+    },
   },
 };

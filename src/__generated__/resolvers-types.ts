@@ -122,12 +122,18 @@ export type Query = {
   posts?: Maybe<Array<Maybe<Post>>>;
   product?: Maybe<Product>;
   products: Array<Product>;
+  profile?: Maybe<Profile>;
   users?: Maybe<Array<Maybe<User>>>;
 };
 
 
 export type QueryProductArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type QueryProfileArgs = {
+  userId: Scalars['ID']['input'];
 };
 
 export type User = {
@@ -295,6 +301,7 @@ export type QueryResolvers<ContextType = DataSourceContext, ParentType extends R
   posts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType>;
   product?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductArgs, 'id'>>;
   products?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType>;
+  profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, RequireFields<QueryProfileArgs, 'userId'>>;
   users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
 }>;
 
