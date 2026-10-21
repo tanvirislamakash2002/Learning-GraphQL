@@ -23,6 +23,8 @@ export const typeDefs = gql(`
 
         addPost(post: PostInput!): PostPayload
 
+        publishPost(postId:ID!):PostPayload
+
         updatePost(postId: ID!, post: PostInput!): PostPayload
 
         deletePost(postId: ID!): PostPayload

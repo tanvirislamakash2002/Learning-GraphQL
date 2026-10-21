@@ -34,6 +34,7 @@ export type Mutation = {
   addPost?: Maybe<PostPayload>;
   createProduct?: Maybe<Product>;
   deletePost?: Maybe<PostPayload>;
+  publishPost?: Maybe<PostPayload>;
   signin?: Maybe<AuthPayload>;
   signup?: Maybe<AuthPayload>;
   updatePost?: Maybe<PostPayload>;
@@ -51,6 +52,11 @@ export type MutationCreateProductArgs = {
 
 
 export type MutationDeletePostArgs = {
+  postId: Scalars['ID']['input'];
+};
+
+
+export type MutationPublishPostArgs = {
   postId: Scalars['ID']['input'];
 };
 
@@ -247,6 +253,7 @@ export type MutationResolvers<ContextType = DataSourceContext, ParentType extend
   addPost?: Resolver<Maybe<ResolversTypes['PostPayload']>, ParentType, ContextType, RequireFields<MutationAddPostArgs, 'post'>>;
   createProduct?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<MutationCreateProductArgs, 'input'>>;
   deletePost?: Resolver<Maybe<ResolversTypes['PostPayload']>, ParentType, ContextType, RequireFields<MutationDeletePostArgs, 'postId'>>;
+  publishPost?: Resolver<Maybe<ResolversTypes['PostPayload']>, ParentType, ContextType, RequireFields<MutationPublishPostArgs, 'postId'>>;
   signin?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<MutationSigninArgs, 'email' | 'password'>>;
   signup?: Resolver<Maybe<ResolversTypes['AuthPayload']>, ParentType, ContextType, RequireFields<MutationSignupArgs, 'email' | 'name' | 'password'>>;
   updatePost?: Resolver<Maybe<ResolversTypes['PostPayload']>, ParentType, ContextType, RequireFields<MutationUpdatePostArgs, 'post' | 'postId'>>;
