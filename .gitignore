@@ -34,7 +34,11 @@ node_modules/
 generated-schema.graphql
 
 .agents
+<<<<<<< HEAD
 .cloude
+=======
+.claude
+>>>>>>> main
 .cursor
 .devin
 .vscode

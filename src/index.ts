@@ -1,3 +1,4 @@
+import 'temporal-polyfill/full/global';
 import { readFileSync } from "fs";
 import gql from "graphql-tag";
 import { buildSubgraphSchema } from "@apollo/subgraph";
@@ -6,20 +7,31 @@ import {
   startStandaloneServer,
 } from "@apollo/server/standalone";
 import resolvers from "./resolvers/index.js";
-
+import { typeDefs } from "./schema.js";
+import { prisma } from './prisma/db.js';
+import { jwtHelper } from './utils/jwtHelper.js';
+interface Context {
+  prisma: typeof prisma;
+  userInfo: {
+    userId: number | null
+  } | null
+}
 const port = "4001";
 
 async function main() {
-  let typeDefs = gql(
-    readFileSync("schema.graphql", {
-      encoding: "utf-8",
-    })
-  );
+
   const server = new ApolloServer({
     schema: buildSubgraphSchema({ typeDefs, resolvers }),
   });
   const { url } = await startStandaloneServer(server, {
     listen: { port: Number.parseInt(port) },
+    context: async ({ req }): Promise<Context> => {
+      const userInfo = await jwtHelper.getUserInfoFromToken(req.headers.authorization as string)
+      return {
+        prisma,
+        userInfo
+      }
+    }
   });
 
   console.log(`🚀  Subgraph ready at ${url}`);
